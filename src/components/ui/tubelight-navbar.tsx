@@ -7,6 +7,7 @@ import {
   Home,
   Lightbulb,
   Mail,
+  Trophy,
   UserRound,
 } from "lucide-react";
 import { forwardRef } from "react";
@@ -17,12 +18,13 @@ export const floatingNavigation = [
   { label: "Research", href: "#research", icon: FlaskConical },
   { label: "Projects", href: "#projects", icon: FolderCode },
   { label: "Ventures", href: "#ventures", icon: Lightbulb },
+  { label: "Activities", href: "#activities", icon: Trophy },
   { label: "Contact", href: "#contact", icon: Mail },
 ];
 export const TubelightNavbar = forwardRef<
   HTMLElement,
-  { visible: boolean; active: string }
->(function TubelightNavbar({ visible, active }, ref) {
+  { visible: boolean; active: string; homePrefix?: string }
+>(function TubelightNavbar({ visible, active, homePrefix = "" }, ref) {
   const reduced = useReducedMotion();
   return (
     <AnimatePresence>
@@ -39,7 +41,7 @@ export const TubelightNavbar = forwardRef<
           {floatingNavigation.map(({ label, href, icon: Icon }) => (
             <a
               key={href}
-              href={href}
+              href={`${homePrefix}${href}`}
               className="tubelight-link"
               aria-label={label}
               title={label === "Journey" ? "Education & Experience" : label}

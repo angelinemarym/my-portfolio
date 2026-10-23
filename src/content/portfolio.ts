@@ -7,10 +7,11 @@ export const profile = {
   role: "AI Researcher · Software Engineer · Tech Founder",
   subheadline:
     "I bridge AI research, software engineering, and entrepreneurship to transform ambitious ideas into intelligent technologies and meaningful real-world solutions.",
-  email: "", // Add your verified address to enable email contact.
+  email: "angeline030303@gmail.com",
   links: {
     github: "",
     linkedin: "https://www.linkedin.com/in/angeline-mary-marchella/",
+    orcid: "https://orcid.org/0009-0000-6787-3672",
     scholar: "",
   },
 };
@@ -19,25 +20,38 @@ export const navigation = [
   { label: "Research", href: "#research" },
   { label: "Projects", href: "#projects" },
   { label: "Ventures", href: "#ventures" },
+  { label: "Activities", href: "#activities" },
 ];
 export const projects = [
   {
-    number: "01",
-    title: "From research to application",
-    category: "AI / RESEARCH",
+    title: "KuraCV",
+    category: "AI / RECRUITMENT",
     description:
-      "A future home for an AI project: the question, the approach, and what was learned.",
-    tags: ["AI", "Experimentation"],
-    visual: "orbital",
+      "An AI recruitment platform connecting job listings, candidate matching, and hiring workflows.",
+    image: "/projects/kuracv-project.jpg",
+    alt: "KuraCV job listings, AI candidate matching, and recruitment dashboard",
+    github: "https://github.com/KuraCV",
+    detail: "/projects/kuracv",
   },
   {
-    number: "02",
-    title: "Software with a purpose",
-    category: "SOFTWARE / ENGINEERING",
+    title: "BambooBrain",
+    category: "AI / LANGUAGE LEARNING",
     description:
-      "A future home for an engineering case study: the problem, the system, and its impact.",
-    tags: ["Software", "Systems"],
-    visual: "system",
+      "A Mandarin learning workspace with reading tools, flashcards, study planning, and speaking practice.",
+    image: "/projects/bamboobrain-project.jpg",
+    alt: "BambooBrain Mandarin learning dashboard, study planner, and flashcards",
+    github: "https://github.com/bamboo-brain",
+    detail: "/projects/bamboobrain",
+  },
+  {
+    title: "NOVA",
+    category: "HEALTH / ASSISTIVE TECHNOLOGY",
+    description:
+      "Next Gen On Body Vital Assistant — a connected concept for elderly care, vital monitoring, and fall-risk alerts.",
+    image: "/projects/nova-project.png",
+    alt: "NOVA wearable and home monitoring concept with caregiver mobile app screens",
+    github: "https://github.com/orgs/nova-body-vital-assistant",
+    detail: "https://nova-body-vital-assistant.vercel.app/",
   },
 ];
 export const venture = {

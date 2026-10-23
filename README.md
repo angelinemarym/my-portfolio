@@ -24,7 +24,19 @@ npm start
 
 Edit `src/content/portfolio.ts` untuk nama, copy, research, proyek, venture, email, dan tautan sosial. Nama, role, headline, dan subheadline berasal dari brief. Entri proyek adalah contoh struktur konten, bukan klaim pekerjaan yang sudah dilakukan. Pendidikan dan pengalaman memakai tanggal dari pemilik serta rincian yang diparafrasekan dari profil LinkedIn. Projects dan Ventures yang belum dilengkapi tetap berupa placeholder; Research menampilkan tiga publikasi yang terverifikasi melalui LinkedIn.
 
-Isi `profile.email` dengan alamat terverifikasi untuk mengaktifkan tombol `mailto:`. Isi `profile.links` untuk menampilkan tautan sosial. Sampai itu diisi, Contact menampilkan pesan coming soon; tidak ada form yang berpura-pura mengirim pesan. Tambahkan URL studi kasus/repository setelah kontennya tersedia. Kartu placeholder sengaja berupa artikel, tanpa tautan palsu.
+Contact menampilkan email, LinkedIn, dan ORCID dari `profile`. Form mengirim langsung dari browser menggunakan paket gratis Web3Forms, tanpa membuka aplikasi email. Belum ada access key di repository sehingga pengiriman nyata perlu konfigurasi berikut.
+
+### Mengaktifkan contact form (Web3Forms)
+
+1. Buat form/access key gratis di https://web3forms.com/ untuk **angeline030303@gmail.com**, lalu selesaikan verifikasi inbox.
+2. Salin `.env.example` ke `.env.local` dan isi `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` dengan access key form tersebut.
+3. Restart `npm run dev`. Pada hosting, tambahkan environment variable yang sama lalu rebuild/redeploy karena variable `NEXT_PUBLIC_` dimasukkan saat build.
+4. Kirim satu pesan uji dan cek inbox/spam. Email pengunjung dipakai Web3Forms sebagai Reply-To.
+
+Access key Web3Forms memang dirancang untuk frontend dan bukan password/API key akun pribadi. Jangan mengisi password Gmail. Jalur gratis harus memakai browser; dokumentasi Web3Forms menyatakan pengiriman dari server memerlukan paket berbayar dan IP whitelist. Form menyertakan honeypot, validasi, loading state, dan konfirmasi hanya ketika provider membalas sukses. Jika konfigurasi belum tersedia atau pengiriman gagal, pesan pengunjung tetap tersimpan di field dan link email langsung tetap tersedia.
+
+Dokumentasi: https://docs.web3forms.com/getting-started/api-reference
+
 
 Situs menggunakan `lang="en"` karena konten portfolio berbahasa Inggris. Instruksi ini berbahasa Indonesia.
 

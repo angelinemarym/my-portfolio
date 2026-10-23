@@ -8,17 +8,20 @@ import {
   Lightbulb,
   Plus,
 } from "lucide-react";
-import { profile, projects, venture } from "@/content/portfolio";
+import { profile, venture } from "@/content/portfolio";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { InteractiveTiltCard } from "@/components/ui/tilt-card";
 import { GlassFolderCard } from "@/components/ui/glass-folder-card";
-import BeamWordmarkFooter from "@/components/ui/beam-wordmark-footer";
+import { PortfolioFooter } from "./portfolio-footer";
 import { BeamHero } from "./beam-hero";
 import { Navigation } from "./navigation";
 import { EducationExperience } from "./education-experience";
 import { SkillsMarquee } from "./skills-marquee";
 import { PublicationCards } from "./publication-cards";
+import { ProjectCarousel } from "./project-carousel";
+import { ActivitiesAwards } from "./activities-awards";
+import { ContactSection } from "./contact-section";
 function Label({
   number,
   children,
@@ -204,49 +207,7 @@ export function Portfolio() {
                 and things worth building.
               </p>
             </div>
-            <div className="project-grid">
-              {projects.map((p) => (
-                <article className="project-card" key={p.number}>
-                  <div className={`project-art ${p.visual}`} aria-hidden="true">
-                    <span className="art-index">EXPLORATION / {p.number}</span>
-                    {p.visual === "orbital" ? (
-                      <div className="orbital-object">
-                        <i />
-                        <i />
-                        <i />
-                        <i />
-                        <b />
-                      </div>
-                    ) : (
-                      <div className="system-object">
-                        <i />
-                        <i />
-                        <i />
-                        <span>IDEA</span>
-                        <span>LOGIC</span>
-                        <span>SYSTEM</span>
-                      </div>
-                    )}
-                    <span className="art-caption">
-                      {p.visual === "orbital"
-                        ? "INTELLIGENCE, EXPLORED."
-                        : "COMPLEXITY, CONNECTED."}
-                    </span>
-                  </div>
-                  <div className="project-meta">
-                    <span>{p.category}</span>
-                    <Badge>Placeholder</Badge>
-                  </div>
-                  <h3>{p.title}</h3>
-                  <p>{p.description}</p>
-                  <div className="project-tags">
-                    {p.tags.map((t) => (
-                      <span key={t}>{t}</span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
+            <ProjectCarousel />
           </div>
         </section>
         <section className="ventures-section section" id="ventures">
@@ -273,93 +234,10 @@ export function Portfolio() {
             </div>
           </div>
         </section>
-        <section className="contact-section section" id="contact">
-          <div className="container">
-            <Label number="06">LET’S CONNECT</Label>
-            <div className="contact-grid">
-              <h2>
-                The next great idea
-                <br />
-                starts with <em>a conversation.</em>
-              </h2>
-              <div>
-                <p>
-                  Interested in AI research, building thoughtful software, or
-                  exploring a new venture?
-                </p>
-                {profile.email ? (
-                  <Button asChild>
-                    <a href={`mailto:${profile.email}`}>
-                      Say hello <ArrowUpRight size={18} aria-hidden="true" />
-                    </a>
-                  </Button>
-                ) : (
-                  <div className="contact-placeholder">
-                    <span className="contact-dot" /> Contact details coming soon
-                    <p>
-                      A verified email address and social links will appear
-                      here.
-                    </p>
-                  </div>
-                )}
-                {Object.entries(profile.links).some(([, url]) => url) && (
-                  <div className="social-links">
-                    {Object.entries(profile.links)
-                      .filter(([, url]) => url)
-                      .map(([label, url]) => (
-                        <a
-                          key={label}
-                          href={url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {label}
-                          <ArrowUpRight size={14} aria-hidden="true" />
-                        </a>
-                      ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ActivitiesAwards />
+        <ContactSection />
       </main>
-      <BeamWordmarkFooter
-        brand="Angeline"
-        company={profile.name}
-        wordmark="ANGELINE"
-        background="#16090f"
-        ink="#f6edef"
-        muted="#c8aab4"
-        accent="#be537a"
-        wordTop="#9b3b5a"
-        wordFoot="#2e1020"
-        animate={true}
-        socials={[]}
-        credits={[{ label: "Research. Build. Create." }]}
-        columns={[
-          {
-            title: "Explore",
-            links: [
-              { label: "About", href: "#about" },
-              {
-                label: "Education & Experience",
-                href: "#education-experience",
-              },
-              { label: "Research", href: "#research" },
-              { label: "Projects", href: "#projects" },
-            ],
-          },
-          {
-            title: "Keep in touch",
-            links: [
-              { label: "Ventures", href: "#ventures" },
-              { label: "Contact", href: "#contact" },
-              { label: "Back to top", href: "#home" },
-            ],
-          },
-        ]}
-      />
+      <PortfolioFooter />
     </>
   );
 }

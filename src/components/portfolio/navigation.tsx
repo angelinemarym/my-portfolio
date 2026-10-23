@@ -6,7 +6,8 @@ import {
   TubelightNavbar,
   floatingNavigation,
 } from "@/components/ui/tubelight-navbar";
-export function Navigation() {
+export function Navigation({ projectPage = false }: { projectPage?: boolean }) {
+  const homePrefix = projectPage ? "/" : "";
   const [open, setOpen] = useState(false);
   const [floating, setFloating] = useState(false);
   const [active, setActive] = useState("#home");
@@ -32,7 +33,11 @@ export function Navigation() {
     let frame = 0;
     const update = () => {
       frame = 0;
-      const threshold = Math.min(innerHeight * 0.3, 220);
+      if (projectPage) {
+        setActive("#projects");
+        return;
+      }
+      const threshold = Math.min(innerHeight * 0.4, 300);
       let current = "#home";
       for (const item of floatingNavigation) {
         const section = document.getElementById(item.href.slice(1));
@@ -47,15 +52,26 @@ export function Navigation() {
       if (!frame) frame = requestAnimationFrame(update);
     };
     update();
+    // Recheck when images/cards change section positions, even without scrolling.
+    const layoutObserver = new ResizeObserver(schedule);
+    for (const item of floatingNavigation) {
+      const section = document.getElementById(item.href.slice(1));
+      if (section) layoutObserver.observe(section);
+    }
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    window.addEventListener("hashchange", schedule);
+    window.addEventListener("pageshow", schedule);
     return () => {
       observer.disconnect();
+      layoutObserver.disconnect();
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      window.removeEventListener("hashchange", schedule);
+      window.removeEventListener("pageshow", schedule);
     };
-  }, []);
+  }, [projectPage, floatingNavigation]);
   const toggle = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -64,17 +80,21 @@ export function Navigation() {
   return (
     <>
       <header ref={header} className="site-header">
-        <a href="#home" className="brand" aria-label="Angeline — home">
+        <a
+          href={`${homePrefix}#home`}
+          className="brand"
+          aria-label="Angeline — home"
+        >
           am<span>.</span>
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
           {navigation.map((n) => (
-            <a key={n.href} href={n.href}>
+            <a key={n.href} href={`${homePrefix}${n.href}`}>
               {n.label}
             </a>
           ))}
         </nav>
-        <a className="header-contact" href="#contact">
+        <a className="header-contact" href={`${homePrefix}#contact`}>
           Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
         </a>
         <button
@@ -102,7 +122,11 @@ export function Navigation() {
           >
             {[...navigation, { label: "Contact", href: "#contact" }].map(
               (n) => (
-                <a key={n.href} href={n.href} onClick={() => setOpen(false)}>
+                <a
+                  key={n.href}
+                  href={`${homePrefix}${n.href}`}
+                  onClick={() => setOpen(false)}
+                >
                   {n.label}
                   <ArrowUpRight size={18} aria-hidden="true" />
                 </a>
@@ -111,7 +135,12 @@ export function Navigation() {
           </nav>
         )}
       </header>
-      <TubelightNavbar ref={floatingPanel} visible={floating} active={active} />
+      <TubelightNavbar
+        ref={floatingPanel}
+        visible={floating}
+        active={active}
+        homePrefix={homePrefix}
+      />
     </>
   );
 }

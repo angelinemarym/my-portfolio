@@ -1,15 +1,14 @@
 "use client";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type ComponentPropsWithoutRef } from "react";
 import { approach, beamTarget, drift } from "@/lib/beam";
 
 /** Same layered wash, vertical bands, diagonal beam and pointer glow as the footer. */
-export function BeamHero({
+export function BeamSection({
   children,
-  paused,
-}: {
-  children: ReactNode;
-  paused: boolean;
-}) {
+  paused = false,
+  className = "",
+  ...props
+}: ComponentPropsWithoutRef<"section"> & { paused?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const root = ref.current;
@@ -103,7 +102,7 @@ export function BeamHero({
     };
   }, [paused]);
   return (
-    <section ref={ref} className="hero" id="home" aria-label="Introduction">
+    <section ref={ref} className={`beam-section ${className}`} {...props}>
       <div className="hero-sky" aria-hidden="true">
         <div className="hero-wash" />
         <div className="hero-lines" />
@@ -113,5 +112,21 @@ export function BeamHero({
       </div>
       {children}
     </section>
+  );
+}
+
+export function BeamHero({
+  children,
+  paused,
+}: ComponentPropsWithoutRef<"section"> & { paused: boolean }) {
+  return (
+    <BeamSection
+      className="hero"
+      id="home"
+      aria-label="Introduction"
+      paused={paused}
+    >
+      {children}
+    </BeamSection>
   );
 }
