@@ -54,8 +54,27 @@ export const projects = [
     detail: "https://nova-body-vital-assistant.vercel.app/",
   },
 ];
-export const venture = {
-  title: "The next ambitious idea.",
-  description:
-    "A space for ventures at the intersection of technology and real-world needs. Company names, founder roles, product details, and milestones will be added once verified.",
-};
+export const ventures = [
+  {
+    title: "NAO Academy",
+    category: "EDUCATION / LEARNING",
+    role: "Co-founder & Chief Technology Officer (CTO)",
+    description:
+      "Helping Indonesian students prepare for study in China through CSCA and HSK mentoring, guided classes, and self-paced digital practice.",
+    logo: "/venture/nao-academy.png",
+    href: "https://nao-landing-page.vercel.app/",
+    width: 2156,
+    height: 729,
+  },
+  {
+    title: "Medivue",
+    category: "HEALTH / CONNECTED CARE",
+    role: "Co-founder & Chief Technology Officer (CTO)",
+    description:
+      "Developing connected emergency assessment tools that keep patient information moving from first responders to ambulances and hospitals.",
+    logo: "/venture/medivue.png",
+    href: "https://www.medivue.tech/",
+    width: 1060,
+    height: 304,
+  },
+];

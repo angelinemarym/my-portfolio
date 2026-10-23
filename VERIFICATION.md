@@ -82,3 +82,9 @@ Browser verified Projects advancing from BambooBrain to NOVA, no changes during 
 Replaced the contact placeholder with email, LinkedIn, and ORCID links and related Lucide icons. Added name, email, subject, and message fields, native validation, sending/error/success states, honeypot, and direct-email fallback. Web3Forms free-plan integration submits from the browser, as required by its current API documentation. Configure `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` using `.env.example`; README documents inbox verification, local setup, and hosting rebuild. No live key is configured and no real email was sent during verification.
 
 TypeScript, Webpack production build, and all 8 tests passed. New tests mock provider requests and cover missing configuration, invalid input, success payload, provider rejection, and network failure. Browser verified all three link destinations, required-field validation, desktop contact layout, and no horizontal overflow at 375px/812px. Live inbox delivery remains dependent on the owner’s Web3Forms access key.
+
+## Venture stack cards
+
+Replaced the venture placeholder with two native sticky stack cards for NAO Academy and Medivue, using the owner’s logos from `public/venture`. Brief descriptions were informed by the local NAO and Medivue landing-page source. Reused CardsStack/CardSticky with a sticky introduction and responsive logo sizing; no unverified external URLs or outcome claims added.
+
+TypeScript, Webpack production build, and whitespace checks passed. Browser confirmed both titles/descriptions, logo rendering, desktop layout, and no horizontal overflow at 375px.

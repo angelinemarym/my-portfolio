@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 export const metadata: Metadata = {
   title: "Angeline Mary Marchella — Research. Build. Create.",
   description:
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       {/* Extensions may inject body attributes (e.g. cz-shortcut-listen) before hydration.
           Limit the exception to body itself; descendants retain normal mismatch checks. */}
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        {children}
+        <ScrollReveal />
+      </body>
     </html>
   );
 }

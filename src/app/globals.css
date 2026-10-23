@@ -1,4 +1,31 @@
 @import "tailwindcss";
+/* Progressive enhancement: server-rendered content stays visible without JS.
+   Individual translate/scale compose with existing carousel/tilt transforms. */
+[data-scroll-reveal] {
+  transition:
+    opacity 450ms ease,
+    translate 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    scale 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-scroll-reveal][data-reveal-state="hidden"] {
+  opacity: 0;
+  translate: 0 18px;
+  scale: 0.98;
+}
+[data-scroll-reveal][data-reveal-state="visible"],
+[data-scroll-reveal]:focus-within {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    transition: none !important;
+  }
+}
 :root {
   --background: #f6f3ef;
   --foreground: #261c21;
@@ -729,28 +756,99 @@ h2 em {
   }
 }
 .ventures-section {
-  background: #eae1e1;
+  background:
+    radial-gradient(ellipse at 86% 28%, #d8b3c660, transparent 48%),
+    radial-gradient(ellipse at 52% 78%, #f7edf2b3, transparent 50%), #eae1e1;
 }
 .venture-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  align-items: center;
+  align-items: start;
+}
+.venture-intro {
+  position: sticky;
+  top: 130px;
+}
+.venture-intro > p {
+  max-width: 340px;
+  margin: 26px 0;
+  color: var(--muted-foreground);
+  font-size: 15px;
+}
+.venture-intro > .text-link {
+  color: var(--primary);
+}
+.venture-stack.cards-stack {
+  padding-bottom: 0;
+}
+.venture-stack .stack-sticky-card {
+  margin-bottom: 36px;
+}
+.venture-stack .stack-sticky-card:last-child {
+  margin-bottom: 0;
 }
 .venture-card {
-  border: 1px solid #ccb6c1;
-  padding: 32px;
-  border-radius: 4px;
-  background: #f4eeea80;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #ffffffbf;
+  padding: 32px 36px 36px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffffb3, #f8edf2b8 52%, #e9cfdbe0);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 #ffffffe6,
+    inset 1px 0 0 #ffffff70,
+    0 18px 44px -18px #48183238;
+  min-height: 340px;
 }
-.venture-icon {
-  margin-bottom: 25px;
-  color: #844260;
+.venture-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    #ffffff60,
+    transparent 36%,
+    #ffffff0a 66%,
+    #ffffff30
+  );
+  pointer-events: none;
 }
-.venture-card > .inline-flex {
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  color: #805268;
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .venture-card {
+    background: #f6edf2;
+  }
+}
+.venture-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  font-size: 9px;
+  color: var(--primary);
+  letter-spacing: 0.1em;
+}
+.venture-logo {
+  height: 125px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.venture-logo img {
+  display: block;
+  width: min(100%, 360px);
+  max-height: 110px;
+  height: auto;
+  object-fit: contain;
+  object-position: left center;
 }
 .venture-card h3 {
   font-size: 28px;
@@ -758,13 +856,41 @@ h2 em {
   letter-spacing: -0.04em;
   margin: 18px 0 12px;
 }
-.venture-card p {
-  font-size: 13px;
-  color: #74616c;
+.venture-card .venture-role {
+  margin: -4px 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--primary);
 }
-.venture-card .text-link {
+.venture-card p {
+  font-size: 15px;
+  color: #67515f;
+}
+.venture-website {
   margin-top: 20px;
-  color: #7c3855;
+  color: var(--primary);
+}
+@media (max-width: 700px),
+  (max-height: 650px),
+  (prefers-reduced-motion: reduce) {
+  .venture-intro {
+    position: static;
+  }
+}
+@media (max-width: 700px) {
+  .venture-grid {
+    gap: 40px;
+  }
+  .venture-logo {
+    height: 100px;
+  }
+  .venture-logo img {
+    max-height: 85px;
+  }
+  .venture-card {
+    min-height: 320px;
+  }
 }
 .activities-section {
   --foreground: #fff4f2;
@@ -888,7 +1014,9 @@ h2 em {
   }
 }
 .contact-section {
-  background: #f6f3ef;
+  background:
+    radial-gradient(ellipse at 84% 36%, #d8b3c660, transparent 48%),
+    radial-gradient(ellipse at 40% 86%, #f7edf2b3, transparent 50%), #f6f3ef;
 }
 .contact-grid {
   display: grid;
@@ -941,11 +1069,41 @@ h2 em {
 }
 .contact-form {
   min-width: 0;
-  border: 1px solid var(--border);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid #ffffffbf;
   border-radius: 18px;
-  background: var(--card);
+  background: linear-gradient(135deg, #ffffffb3, #f8edf2b8 52%, #e9cfdbe0);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
   padding: 32px;
-  box-shadow: 0 12px 36px #48183208;
+  box-shadow:
+    inset 0 1px 0 #ffffffe6,
+    inset 1px 0 0 #ffffff70,
+    0 18px 44px -18px #48183238;
+}
+.contact-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    #ffffff60,
+    transparent 36%,
+    #ffffff0a 66%,
+    #ffffff30
+  );
+  pointer-events: none;
+}
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .contact-form {
+    background: #f6edf2;
+  }
 }
 .contact-form-heading {
   display: flex;
@@ -990,7 +1148,7 @@ h2 em {
   padding: 12px 13px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: var(--background);
+  background: #ffffff8c;
   color: var(--foreground);
   font-family: inherit;
   font-size: 14px;
@@ -2475,36 +2633,67 @@ h2 em {
   margin-bottom: 0;
 }
 .publication-card {
+  isolation: isolate;
   padding: 32px 38px 38px;
-  border: 1px solid #c49aaf60;
+  border: 1px solid #ffffff80;
   border-radius: 22px;
-  box-shadow: 0 12px 36px #48183218;
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 #ffffffb3,
+    inset 1px 0 0 #ffffff40,
+    0 18px 44px -18px #48183238;
   overflow: hidden;
   min-height: 460px;
 }
+.publication-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    #ffffff26,
+    transparent 36%,
+    #ffffff05 66%,
+    #ffffff1a
+  );
+  pointer-events: none;
+}
 .publication-wine {
+  --pub-solid: #482038;
   --pub-ink: #fff1f4;
   --pub-muted: #d3b7c5;
   --pub-line: #c683a345;
   --pub-accent: #f0bfd3;
-  background: linear-gradient(120deg, #391529, #5d2541);
+  background: linear-gradient(120deg, #391529eb, #5d2541e6);
   color: var(--pub-ink);
 }
 .publication-rose {
+  --pub-solid: #e7cfd9;
   --pub-ink: #54243d;
-  --pub-muted: #79556a;
+  --pub-muted: #694357;
   --pub-line: #9b557844;
   --pub-accent: #813151;
-  background: #e7cfd9;
+  background: linear-gradient(135deg, #f9eef2c7, #e7cfd9e0);
   color: var(--pub-ink);
 }
 .publication-paper {
+  --pub-solid: #f7f2ec;
   --pub-ink: #482b3c;
-  --pub-muted: #7a6270;
+  --pub-muted: #6c5060;
   --pub-line: #a46f8a40;
   --pub-accent: #853656;
-  background: #f7f2ec;
+  background: linear-gradient(135deg, #ffffffc7, #f7f2ece6);
   color: var(--pub-ink);
+}
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .publication-card {
+    background: var(--pub-solid);
+  }
 }
 .publication-card-top {
   display: flex;

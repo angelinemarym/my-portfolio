@@ -6,11 +6,11 @@ import {
   Atom,
   Code2,
   Lightbulb,
-  Plus,
 } from "lucide-react";
-import { profile, venture } from "@/content/portfolio";
+import { profile, ventures } from "@/content/portfolio";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
+import { CardsStack, CardSticky } from "@/components/ui/cards-stack";
 import { InteractiveTiltCard } from "@/components/ui/tilt-card";
 import { GlassFolderCard } from "@/components/ui/glass-folder-card";
 import { PortfolioFooter } from "./portfolio-footer";
@@ -212,26 +212,55 @@ export function Portfolio() {
         </section>
         <section className="ventures-section section" id="ventures">
           <div className="container venture-grid">
-            <div>
+            <div className="venture-intro">
               <Label number="05">VENTURES</Label>
               <h2>
                 From “what if”
                 <br />
                 to <em>what’s next.</em>
               </h2>
-            </div>
-            <div className="venture-card">
-              <div className="venture-icon">
-                <Plus size={32} strokeWidth={1} aria-hidden="true" />
-              </div>
-              <Badge>VENTURE PLACEHOLDER</Badge>
-              <h3>{venture.title}</h3>
-              <p>{venture.description}</p>
+              <p>Building ventures where technology meets real-world needs.</p>
               <a href="#contact" className="text-link">
                 Start a conversation{" "}
                 <ArrowUpRight size={18} aria-hidden="true" />
               </a>
             </div>
+            <CardsStack className="venture-stack" aria-label="Ventures">
+              {ventures.map((venture, index) => (
+                <CardSticky
+                  key={venture.title}
+                  index={index}
+                  className="venture-card"
+                  aria-labelledby={`venture-${index}-title`}
+                >
+                  <div className="venture-card-top">
+                    <span>0{index + 1}</span>
+                    <span>{venture.category}</span>
+                  </div>
+                  <div className="venture-logo">
+                    <Image
+                      src={venture.logo}
+                      alt={`${venture.title} logo`}
+                      width={venture.width}
+                      height={venture.height}
+                      sizes="(max-width: 700px) 70vw, 360px"
+                    />
+                  </div>
+                  <h3 id={`venture-${index}-title`}>{venture.title}</h3>
+                  <p className="venture-role">{venture.role}</p>
+                  <p>{venture.description}</p>
+                  <a
+                    className="text-link venture-website"
+                    href={venture.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${venture.title} website (opens in a new tab)`}
+                  >
+                    Visit website <ArrowUpRight size={17} aria-hidden="true" />
+                  </a>
+                </CardSticky>
+              ))}
+            </CardsStack>
           </div>
         </section>
         <ActivitiesAwards />
