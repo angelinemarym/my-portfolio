@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import {
   ArrowUpRight,
+  Github,
   IdCard,
   Linkedin,
   LoaderCircle,
@@ -25,6 +26,13 @@ const contactLinks = [
     value: "Angeline Mary Marchella",
     href: profile.links.linkedin,
     icon: Linkedin,
+    external: true,
+  },
+  {
+    label: "GitHub",
+    value: "angelinemarym",
+    href: profile.links.github,
+    icon: Github,
     external: true,
   },
   {

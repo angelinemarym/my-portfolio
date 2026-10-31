@@ -89,6 +89,15 @@ export function EducationExperience() {
                         <span className="timeline-organization">
                           {item.organization}
                         </span>
+                        <span className="timeline-logo">
+                          <Image
+                            src={item.logo}
+                            alt={`${item.organization} logo`}
+                            fill
+                            sizes="120px"
+                            style={{ objectFit: "contain", objectPosition: "right center" }}
+                          />
+                        </span>
                         <span className="timeline-expand" aria-hidden="true">
                           {expanded ? <Minus size={17} /> : <Plus size={17} />}
                         </span>
@@ -108,15 +117,6 @@ export function EducationExperience() {
                             <span className="timeline-status">
                               {item.status}
                             </span>
-                          </div>
-                          <div className="timeline-logo">
-                            <Image
-                              src={item.logo}
-                              alt={`${item.organization} logo`}
-                              fill
-                              sizes="160px"
-                              style={{ objectFit: "contain" }}
-                            />
                           </div>
                           <p>{item.description}</p>
                           <ul className="timeline-tags" aria-label="Highlights">

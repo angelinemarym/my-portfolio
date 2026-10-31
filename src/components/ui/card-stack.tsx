@@ -271,8 +271,8 @@ export function CardStack<T extends CardStackItem>({
   cardWidth: preferredCardWidth = 520,
   cardHeight: preferredCardHeight = 320,
 
-  overlap = 0.48,
-  spreadDeg = 48,
+  overlap: preferredOverlap = 0.48,
+  spreadDeg: preferredSpreadDeg = 48,
 
   perspectivePx = 1100,
   depthPx = 140,
@@ -312,11 +312,12 @@ export function CardStack<T extends CardStackItem>({
     return () => observer.disconnect();
   }, []);
   // Fit the entire rotated fan, including its outer cards, inside the stage.
-  // Phones show three cards so each photo remains useful at the smaller width.
-  const visibleCount =
-    containerWidth !== null && containerWidth < 640
-      ? Math.min(maxVisible, 3)
-      : maxVisible;
+  // Phones keep one large photo with neighbors peeking from behind, nearly flat,
+  // so the active photo stays readable instead of shrinking to fit the fan.
+  const compact = containerWidth !== null && containerWidth < 640;
+  const visibleCount = compact ? Math.min(maxVisible, 3) : maxVisible;
+  const overlap = compact ? 0.88 : preferredOverlap;
+  const spreadDeg = compact ? 8 : preferredSpreadDeg;
   const maxOffset = Math.max(0, Math.floor(visibleCount / 2));
   const stepDeg = maxOffset > 0 ? spreadDeg / maxOffset : 0;
   const aspect = preferredCardHeight / preferredCardWidth;
@@ -335,7 +336,7 @@ export function CardStack<T extends CardStackItem>({
       ? preferredCardWidth
       : Math.min(
           preferredCardWidth,
-          Math.max(1, containerWidth - 48) / fanWidth,
+          Math.max(1, containerWidth - (compact ? 32 : 48)) / fanWidth,
         );
   const cardHeight = (cardWidth * preferredCardHeight) / preferredCardWidth;
   const len = items.length;

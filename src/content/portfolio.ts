@@ -9,7 +9,7 @@ export const profile = {
     "I bridge AI research, software engineering, and entrepreneurship to transform ambitious ideas into intelligent technologies and meaningful real-world solutions.",
   email: "angeline030303@gmail.com",
   links: {
-    github: "",
+    github: "https://github.com/angelinemarym",
     linkedin: "https://www.linkedin.com/in/angeline-mary-marchella/",
     orcid: "https://orcid.org/0009-0000-6787-3672",
     scholar: "",
