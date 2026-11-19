@@ -62,7 +62,7 @@ export const ventures = [
     description:
       "Helping Indonesian students prepare for study in China through CSCA and HSK mentoring, guided classes, and self-paced digital practice.",
     logo: "/venture/nao-academy.png",
-    href: "https://nao-landing-page.vercel.app/",
+    href: "https://naoacademy.com/",
     width: 2156,
     height: 729,
   },
